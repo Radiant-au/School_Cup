@@ -1,0 +1,464 @@
+export interface Player {
+  id: string;
+  name: string;
+  number: string;
+  profile_string_link: string;
+}
+
+export interface MatchEvent {
+  matchId: string;
+  teamId: string;
+  playerId: string;
+}
+
+export interface StandingEntry {
+  teamId: string;
+  p: number;
+  w: number;
+  d: number;
+  l: number;
+  gf: number;
+  ga: number;
+  gd: number;
+  pts: number;
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  group: "A" | "B" | "Female";
+  gender: "Male" | "Female";
+  logo?: string;
+  color?: string;
+}
+
+export interface Match {
+  id: string;
+  date: string;
+  time: string;
+  teamA: string;
+  teamB: string;
+  logoA?: string;
+  logoB?: string;
+  group: "A" | "B" | "Female" | "Semi-final" | "Final";
+  gender: "Male" | "Female";
+  scoreA: number | null;
+  scoreB: number | null;
+  finished: boolean;
+}
+
+export const TEAMS: Team[] = [
+  { id: "PrE(A)", name: "PrE(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
+  { id: "IS(A)", name: "IS(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#FFD700" },
+  { id: "AME", name: "AME", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#E74C3C" },
+  { id: "EcE(A)", name: "EcE(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#2ECC71" },
+  { id: "CE_M", name: "CE", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#9B59B6" },
+  { id: "EcE(B)", name: "EcE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#2ECC71" },
+  { id: "IS(B)", name: "IS(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#8B4513" },
+  { id: "PrE(B)", name: "PrE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
+  { id: "IS_F", name: "IS", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#FFD700" },
+  { id: "CE_F", name: "CE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#9B59B6" },
+  { id: "PrE_F", name: "PrE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
+  { id: "AME_F", name: "AME", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#E74C3C" },
+  { id: "EcE_F", name: "EcE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#2ECC71" },
+];
+
+export const MATCHES: Match[] = [
+  // Day 1 — June 29
+  {
+    id: "1",
+    date: "2026-06-29",
+    time: "2:00 PM",
+    teamA: "PrE(A)",
+    teamB: "IS(A)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    group: "A",
+    gender: "Male",
+    scoreA: 0,
+    scoreB: 0,
+    finished: true,
+  },
+  {
+    id: "2",
+    date: "2026-06-29",
+    time: "3:30 PM",
+    teamA: "AME",
+    teamB: "EcE(A)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "A",
+    gender: "Male",
+    scoreA: 1,
+    scoreB: 2,
+    finished: true,
+  },
+  {
+    id: "3",
+    date: "2026-06-29",
+    time: "5:00 PM",
+    teamA: "IS_F",
+    teamB: "CE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: 0,
+    scoreB: 0,
+    finished: true,
+  },
+  // Day 2
+  {
+    id: "4",
+    date: "2026-06-30",
+    time: "2:00 PM",
+    teamA: "CE_M",
+    teamB: "EcE(B)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "B",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "5",
+    date: "2026-06-30",
+    time: "3:30 PM",
+    teamA: "IS(B)",
+    teamB: "PrE(B)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    group: "B",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "6",
+    date: "2026-06-30",
+    time: "5:00 PM",
+    teamA: "PrE_F",
+    teamB: "AME_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 3
+  {
+    id: "7",
+    date: "2026-07-01",
+    time: "2:00 PM",
+    teamA: "IS(A)",
+    teamB: "EcE(A)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "A",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "8",
+    date: "2026-07-01",
+    time: "3:30 PM",
+    teamA: "PrE(A)",
+    teamB: "AME",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    group: "A",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "9",
+    date: "2026-07-01",
+    time: "5:00 PM",
+    teamA: "IS_F",
+    teamB: "EcE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 4
+  {
+    id: "10",
+    date: "2026-07-02",
+    time: "2:00 PM",
+    teamA: "EcE(B)",
+    teamB: "PrE(B)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    group: "B",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "11",
+    date: "2026-07-02",
+    time: "3:30 PM",
+    teamA: "CE_M",
+    teamB: "IS(B)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    group: "B",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "12",
+    date: "2026-07-02",
+    time: "5:00 PM",
+    teamA: "CE_F",
+    teamB: "PrE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 5
+  {
+    id: "13",
+    date: "2026-07-03",
+    time: "2:00 PM",
+    teamA: "PrE(A)",
+    teamB: "EcE(A)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "A",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "14",
+    date: "2026-07-03",
+    time: "3:30 PM",
+    teamA: "IS(A)",
+    teamB: "AME",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    group: "A",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "15",
+    date: "2026-07-03",
+    time: "5:00 PM",
+    teamA: "AME_F",
+    teamB: "EcE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 6
+  {
+    id: "16",
+    date: "2026-07-04",
+    time: "2:00 PM",
+    teamA: "CE_M",
+    teamB: "PrE(B)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    group: "B",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "17",
+    date: "2026-07-04",
+    time: "3:30 PM",
+    teamA: "EcE(B)",
+    teamB: "IS(B)",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    group: "B",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "18",
+    date: "2026-07-04",
+    time: "5:00 PM",
+    teamA: "IS_F",
+    teamB: "PrE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 7
+  {
+    id: "19",
+    date: "2026-07-06",
+    time: "3:00 PM",
+    teamA: "CE_F",
+    teamB: "AME_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "20",
+    date: "2026-07-06",
+    time: "4:30 PM",
+    teamA: "PrE_F",
+    teamB: "EcE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 8
+  {
+    id: "21",
+    date: "2026-07-07",
+    time: "2:00 PM",
+    teamA: "Group A 1st",
+    teamB: "Group B 2nd",
+    group: "Semi-final",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "22",
+    date: "2026-07-07",
+    time: "4:00 PM",
+    teamA: "Group B 1st",
+    teamB: "Group A 2nd",
+    group: "Semi-final",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 9
+  {
+    id: "23",
+    date: "2026-07-08",
+    time: "2:00 PM",
+    teamA: "AME_F",
+    teamB: "IS_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "24",
+    date: "2026-07-08",
+    time: "4:00 PM",
+    teamA: "CE_F",
+    teamB: "EcE_F",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
+    group: "Female",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  // Day 10 — Final
+  {
+    id: "25",
+    date: "2026-07-10",
+    time: "3:00 PM",
+    teamA: "TBD",
+    teamB: "TBD",
+    group: "Final",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+  {
+    id: "26",
+    date: "2026-07-10",
+    time: "5:00 PM",
+    teamA: "TBD",
+    teamB: "TBD",
+    group: "Final",
+    gender: "Female",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
+];
+
+export const getTeamName = (id: string) => {
+  const team = TEAMS.find((t) => t.id === id);
+  return team ? team.name : id;
+};
+
+export const MATCH_EVENTS: MatchEvent[] = [
+  { matchId: "2", teamId: "AME", playerId: "AME_02" },
+  { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_05" },
+  { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_05" },
+];
+
+export const STANDINGS: StandingEntry[] = [
+  { teamId: "PrE(A)", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
+  { teamId: "IS(A)", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
+  { teamId: "AME", p: 1, w: 0, d: 0, l: 1, gf: 2, ga: 1, gd: -1, pts: 0 },
+  { teamId: "EcE(A)", p: 1, w: 0, d: 0, l: 1, gf: 1, ga: 2, gd: 1, pts: 3 },
+  { teamId: "IS_F", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
+  { teamId: "CE_F", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
+  { teamId: "CE_M", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "EcE(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "IS(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "PrE(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "PrE_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "AME_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "EcE_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+];
+
+export const TOURNAMENT_DATES = Array.from(
+  new Set(MATCHES.map((m) => m.date)),
+).sort();
