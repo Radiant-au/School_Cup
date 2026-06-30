@@ -58,7 +58,7 @@ export const TEAMS: Team[] = [
   { id: "PrE(B)", name: "PrE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4ad970ff" },
   { id: "IS_F", name: "IS", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#FFD700" },
   { id: "CE_F", name: "CE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#151415ff" },
-  { id: "PrE_F", name: "PrE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
+  { id: "PrE_F", name: "PrE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#e24938ff" },
   { id: "AME_F", name: "AME", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#9e9493ff" },
   { id: "EcE_F", name: "EcE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#e6f4ecff" },
 ];
@@ -118,9 +118,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
     group: "B",
     gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 3,
+    scoreB: 2,
+    finished: true,
   },
   {
     id: "5",
@@ -132,9 +132,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
     group: "B",
     gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 0,
+    scoreB: 2,
+    finished: true,
   },
   {
     id: "6",
@@ -146,9 +146,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
     group: "Female",
     gender: "Female",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 0,
+    scoreB: 0,
+    finished: true,
   },
   // Day 3
   {
@@ -451,8 +451,10 @@ export const getTeamName = (id: string) => {
 
 export const MATCH_EVENTS: MatchEvent[] = [
   { matchId: "2", teamId: "AME", playerId: "AME_02" },
-  { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_05" },
-  { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_05" },
+  { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_03" },
+  { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_03" },
+  { matchId: "5", teamId: "PrE(B)", playerId: "PrE_B_10" },
+  { matchId: "5", teamId: "PrE(B)", playerId: "PrE_B_10" },
 ];
 
 export const STANDINGS: StandingEntry[] = [
@@ -462,12 +464,12 @@ export const STANDINGS: StandingEntry[] = [
   { teamId: "EcE(A)", p: 1, w: 0, d: 0, l: 1, gf: 1, ga: 2, gd: 1, pts: 3 },
   { teamId: "IS_F", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
   { teamId: "CE_F", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
-  { teamId: "CE_M", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
-  { teamId: "EcE(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
-  { teamId: "IS(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
-  { teamId: "PrE(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
-  { teamId: "PrE_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
-  { teamId: "AME_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
+  { teamId: "CE_M", p: 0, w: 0, d: 0, l: 0, gf: 2, ga: 3, gd: 1, pts: 3 },
+  { teamId: "EcE(B)", p: 0, w: 0, d: 0, l: 0, gf: 3, ga: 2, gd: -1, pts: 0 },
+  { teamId: "IS(B)", p: 0, w: 0, d: 0, l: 0, gf: 2, ga: 0, gd: -2, pts: 0 },
+  { teamId: "PrE(B)", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 2, gd: 2, pts: 3 },
+  { teamId: "PrE_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
+  { teamId: "AME_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
   { teamId: "EcE_F", p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 },
 ];
 

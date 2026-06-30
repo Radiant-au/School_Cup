@@ -10,7 +10,7 @@ export const PrE_B_male: Player[] = [
   { id: "PrE_B_07", name: "မောင်တိုးတက်ထွန်း", number: "", profile_string_link: "" },
   { id: "PrE_B_08", name: "မောင်ပိုင်သတိုး", number: "", profile_string_link: "" },
   { id: "PrE_B_09", name: "မောင်ကျော်ထက်လင်း", number: "", profile_string_link: "" },
-  { id: "PrE_B_10", name: "မောင်သန်းထိုက်ဦး", number: "", profile_string_link: "" },
+  { id: "PrE_B_10", name: "မောင်သန်းထိုက်ဦး", number: "21", profile_string_link: "" },
   { id: "PrE_B_11", name: "မောင်စိုးသူရိန်ထွန်း", number: "", profile_string_link: "" },
   { id: "PrE_B_12", name: "မောင်မင်းစည်သူ", number: "", profile_string_link: "" },
   { id: "PrE_B_13", name: "မောင်ထိန်လင်းဖြိုး", number: "", profile_string_link: "" },

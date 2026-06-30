@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Calendar, BarChart2, Trophy } from "lucide-react";
 import { motion } from "framer-motion";
+import footballLogo from "@/assets/football.svg";
 
 interface MobileLayoutProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ export function MobileLayout({
     { id: "table", label: "Table", icon: BarChart2 },
     { id: "knockout", label: "Cup", icon: Trophy },
   ];
+  const logo = "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748742/UTYCC_tttyy9.jpg"
 
   return (
     <div className="w-full min-h-[100dvh] bg-background flex flex-col relative overflow-hidden">
@@ -26,9 +28,13 @@ export function MobileLayout({
 
       {/* Header */}
       <header className="pt-6 pb-4 px-4 bg-background sticky top-0 z-40 border-b border-border">
-        <h1 className="font-barlow text-2xl font-bold text-center text-foreground tracking-wide uppercase drop-shadow-[0_0_12px_rgba(0,144,255,0.4)]">
-          School Cup 2026
-        </h1>
+        <div className="flex items-center justify-center gap-2">
+          <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+          <h1 className="font-barlow text-2xl font-bold text-foreground tracking-wide uppercase drop-shadow-[0_0_12px_rgba(0,144,255,0.4)]">
+            UTYCC Cup
+          </h1>
+          <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+        </div>
       </header>
 
       {/* Main Content Area */}
