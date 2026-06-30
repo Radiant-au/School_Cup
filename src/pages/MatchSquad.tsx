@@ -43,8 +43,8 @@ function GoalIndicator({ goals }: { goals: number }) {
 
 function PlayerAvatar({ goals, color }: { goals: number; color: string }) {
   const isScorer = goals > 0;
-  const borderColor = isScorer ? color : "rgba(255,255,255,0.1)";
-  const bgColor = isScorer ? `${color}15` : "rgba(255,255,255,0.05)";
+  const borderColor = color;
+  const bgColor = `${color}15`;
   return (
     <div className="relative w-11 h-11 shrink-0">
       <div
@@ -60,7 +60,7 @@ function PlayerAvatar({ goals, color }: { goals: number; color: string }) {
       {goals >= 1 && (
         <div
           className="absolute -bottom-0.5 -right-0.5 rounded-full flex items-center justify-center border border-background"
-          style={{ width: 16, height: 16, backgroundColor: color }}
+          style={{ width: 16, height: 16, backgroundColor: "#22c55e" }}
         >
           <span className="text-[9px] font-extrabold text-white leading-none">
             {goals}
@@ -140,7 +140,7 @@ export default function MatchSquad() {
   const badgeText =
     match.group === "Female"
       ? "FEMALE"
-      : match.group === "Semi-final" || match.group === "Final"
+      : match.group === "Semi-final" || match.group === "Final" || match.group === "Bronze Final"
         ? match.group.toUpperCase()
         : `GROUP ${match.group} · ${match.gender.toUpperCase()}`;
 

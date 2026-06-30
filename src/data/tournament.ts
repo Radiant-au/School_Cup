@@ -40,7 +40,7 @@ export interface Match {
   teamB: string;
   logoA?: string;
   logoB?: string;
-  group: "A" | "B" | "Female" | "Semi-final" | "Final";
+  group: "A" | "B" | "Female" | "Semi-final" | "Final" | "Bronze Final";
   gender: "Male" | "Female";
   scoreA: number | null;
   scoreB: number | null;
@@ -48,19 +48,19 @@ export interface Match {
 }
 
 export const TEAMS: Team[] = [
-  { id: "PrE(A)", name: "PrE(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
+  { id: "PrE(A)", name: "PrE(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#e24938ff" },
   { id: "IS(A)", name: "IS(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#FFD700" },
-  { id: "AME", name: "AME", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#E74C3C" },
-  { id: "EcE(A)", name: "EcE(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#2ECC71" },
-  { id: "CE_M", name: "CE", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#9B59B6" },
-  { id: "EcE(B)", name: "EcE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#2ECC71" },
+  { id: "AME", name: "AME", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#9e9493ff" },
+  { id: "EcE(A)", name: "EcE(A)", group: "A", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#e6f4ecff" },
+  { id: "CE_M", name: "CE", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#181718ff" },
+  { id: "EcE(B)", name: "EcE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#446ddfff" },
   { id: "IS(B)", name: "IS(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#8B4513" },
-  { id: "PrE(B)", name: "PrE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
+  { id: "PrE(B)", name: "PrE(B)", group: "B", gender: "Male", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4ad970ff" },
   { id: "IS_F", name: "IS", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg", color: "#FFD700" },
-  { id: "CE_F", name: "CE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#9B59B6" },
+  { id: "CE_F", name: "CE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg", color: "#151415ff" },
   { id: "PrE_F", name: "PrE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg", color: "#4A90D9" },
-  { id: "AME_F", name: "AME", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#E74C3C" },
-  { id: "EcE_F", name: "EcE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#2ECC71" },
+  { id: "AME_F", name: "AME", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg", color: "#9e9493ff" },
+  { id: "EcE_F", name: "EcE", group: "Female", gender: "Female", logo: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg", color: "#e6f4ecff" },
 ];
 
 export const MATCHES: Match[] = [
@@ -68,7 +68,7 @@ export const MATCHES: Match[] = [
   {
     id: "1",
     date: "2026-06-29",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "PrE(A)",
     teamB: "IS(A)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
@@ -82,7 +82,7 @@ export const MATCHES: Match[] = [
   {
     id: "2",
     date: "2026-06-29",
-    time: "3:30 PM",
+    time: "4:30 PM",
     teamA: "AME",
     teamB: "EcE(A)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
@@ -96,7 +96,7 @@ export const MATCHES: Match[] = [
   {
     id: "3",
     date: "2026-06-29",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "IS_F",
     teamB: "CE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
@@ -111,7 +111,7 @@ export const MATCHES: Match[] = [
   {
     id: "4",
     date: "2026-06-30",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "CE_M",
     teamB: "EcE(B)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -125,7 +125,7 @@ export const MATCHES: Match[] = [
   {
     id: "5",
     date: "2026-06-30",
-    time: "3:30 PM",
+    time: "4:30 PM",
     teamA: "IS(B)",
     teamB: "PrE(B)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
@@ -139,7 +139,7 @@ export const MATCHES: Match[] = [
   {
     id: "6",
     date: "2026-06-30",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "PrE_F",
     teamB: "AME_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
@@ -154,7 +154,7 @@ export const MATCHES: Match[] = [
   {
     id: "7",
     date: "2026-07-01",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "IS(A)",
     teamB: "EcE(A)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
@@ -168,7 +168,7 @@ export const MATCHES: Match[] = [
   {
     id: "8",
     date: "2026-07-01",
-    time: "3:30 PM",
+    time: "4:30 PM",
     teamA: "PrE(A)",
     teamB: "AME",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
@@ -182,7 +182,7 @@ export const MATCHES: Match[] = [
   {
     id: "9",
     date: "2026-07-01",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "IS_F",
     teamB: "EcE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
@@ -197,7 +197,7 @@ export const MATCHES: Match[] = [
   {
     id: "10",
     date: "2026-07-02",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "EcE(B)",
     teamB: "PrE(B)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
@@ -211,7 +211,7 @@ export const MATCHES: Match[] = [
   {
     id: "11",
     date: "2026-07-02",
-    time: "3:30 PM",
+    time: "4:30 PM",
     teamA: "CE_M",
     teamB: "IS(B)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -225,7 +225,7 @@ export const MATCHES: Match[] = [
   {
     id: "12",
     date: "2026-07-02",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "CE_F",
     teamB: "PrE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -240,7 +240,7 @@ export const MATCHES: Match[] = [
   {
     id: "13",
     date: "2026-07-03",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "PrE(A)",
     teamB: "EcE(A)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
@@ -254,7 +254,7 @@ export const MATCHES: Match[] = [
   {
     id: "14",
     date: "2026-07-03",
-    time: "3:30 PM",
+    time: "4:30 PM",
     teamA: "IS(A)",
     teamB: "AME",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
@@ -268,7 +268,7 @@ export const MATCHES: Match[] = [
   {
     id: "15",
     date: "2026-07-03",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "AME_F",
     teamB: "EcE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
@@ -283,7 +283,7 @@ export const MATCHES: Match[] = [
   {
     id: "16",
     date: "2026-07-04",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "CE_M",
     teamB: "PrE(B)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -297,7 +297,7 @@ export const MATCHES: Match[] = [
   {
     id: "17",
     date: "2026-07-04",
-    time: "3:30 PM",
+    time: "4:30 PM",
     teamA: "EcE(B)",
     teamB: "IS(B)",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
@@ -311,7 +311,7 @@ export const MATCHES: Match[] = [
   {
     id: "18",
     date: "2026-07-04",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "IS_F",
     teamB: "PrE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
@@ -326,7 +326,7 @@ export const MATCHES: Match[] = [
   {
     id: "19",
     date: "2026-07-06",
-    time: "3:00 PM",
+    time: "5:00 PM",
     teamA: "CE_F",
     teamB: "AME_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -340,7 +340,7 @@ export const MATCHES: Match[] = [
   {
     id: "20",
     date: "2026-07-06",
-    time: "4:30 PM",
+    time: "6:00 PM",
     teamA: "PrE_F",
     teamB: "EcE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
@@ -355,7 +355,7 @@ export const MATCHES: Match[] = [
   {
     id: "21",
     date: "2026-07-07",
-    time: "2:00 PM",
+    time: "3:00 PM",
     teamA: "Group A 1st",
     teamB: "Group B 2nd",
     group: "Semi-final",
@@ -367,7 +367,7 @@ export const MATCHES: Match[] = [
   {
     id: "22",
     date: "2026-07-07",
-    time: "4:00 PM",
+    time: "4:30 PM",
     teamA: "Group B 1st",
     teamB: "Group A 2nd",
     group: "Semi-final",
@@ -380,7 +380,7 @@ export const MATCHES: Match[] = [
   {
     id: "23",
     date: "2026-07-08",
-    time: "2:00 PM",
+    time: "5:00 PM",
     teamA: "AME_F",
     teamB: "IS_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
@@ -394,7 +394,7 @@ export const MATCHES: Match[] = [
   {
     id: "24",
     date: "2026-07-08",
-    time: "4:00 PM",
+    time: "6:00 PM",
     teamA: "CE_F",
     teamB: "EcE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -405,11 +405,23 @@ export const MATCHES: Match[] = [
     scoreB: null,
     finished: false,
   },
-  // Day 10 — Final
+  // Day 10 — Finals
+  {
+    id: "26",
+    date: "2026-07-10",
+    time: "3:00 PM",
+    teamA: "TBD",
+    teamB: "TBD",
+    group: "Bronze Final",
+    gender: "Male",
+    scoreA: null,
+    scoreB: null,
+    finished: false,
+  },
   {
     id: "25",
     date: "2026-07-10",
-    time: "3:00 PM",
+    time: "4:30 PM",
     teamA: "TBD",
     teamB: "TBD",
     group: "Final",
@@ -419,9 +431,9 @@ export const MATCHES: Match[] = [
     finished: false,
   },
   {
-    id: "26",
+    id: "27",
     date: "2026-07-10",
-    time: "5:00 PM",
+    time: "6:00 PM",
     teamA: "TBD",
     teamB: "TBD",
     group: "Final",

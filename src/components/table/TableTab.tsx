@@ -36,12 +36,6 @@ const buildTable = (group: string, gender: string): TableRow[] => {
   );
 };
 
-function formatSignedGD(gd: number): string {
-  if (gd > 0) return `+${gd}`;
-  if (gd < 0) return `${gd}`;
-  return "0";
-}
-
 function gdColorClass(gd: number): string {
   if (gd > 0) return "text-green-400";
   if (gd < 0) return "text-red-400";
@@ -114,7 +108,7 @@ function LeagueTable({
                 <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-7">
                   L
                 </th>
-                <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-7">
+                <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-10">
                   +/-
                 </th>
                 <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-7">
@@ -169,7 +163,7 @@ function LeagueTable({
                       {row.l}
                     </td>
                     <td className={`px-2 py-2.5 text-center text-xs font-medium ${gdColorClass(row.gd)}`}>
-                      {formatSignedGD(row.gd)}
+                      {`${row.gf}-${row.ga}`}
                     </td>
                     <td className="px-2 py-2.5 text-center text-muted-foreground text-xs">
                       {row.gd}

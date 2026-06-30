@@ -129,9 +129,8 @@ export function KnockoutTab() {
               <button
                 key={g}
                 onClick={() => setActiveGender(g)}
-                className={`flex-1 relative py-2 text-sm font-semibold tracking-wide rounded-lg transition-colors duration-200 z-10 ${
-                  isActive ? "text-foreground" : "text-muted-foreground"
-                }`}
+                className={`flex-1 relative py-2 text-sm font-semibold tracking-wide rounded-lg transition-colors duration-200 z-10 ${isActive ? "text-foreground" : "text-muted-foreground"
+                  }`}
               >
                 {isActive && (
                   <motion.div
@@ -167,17 +166,17 @@ export function KnockoutTab() {
               <SectionHeader label="Cup Finals" />
 
               <FinalCard
-                type="cup"
-                label="Cup Final"
-                date="Thu 10 Jul"
+                type="bronze"
+                label="Bronze Final"
+                date="Fri 10 Jul"
                 time="3:00 PM"
                 delay={0.05}
               />
               <FinalCard
-                type="bronze"
-                label="Bronze Final"
-                date="Thu 10 Jul"
-                time="1:00 PM"
+                type="cup"
+                label="Cup Final"
+                date="Fri 10 Jul"
+                time="4:30 PM"
                 delay={0.15}
               />
             </motion.div>
@@ -194,8 +193,8 @@ export function KnockoutTab() {
               <FinalCard
                 type="cup"
                 label="Cup Final"
-                date="Thu 10 Jul"
-                time="5:00 PM"
+                date="Fri 10 Jul"
+                time="6:00 PM"
                 delay={0.05}
               />
             </motion.div>

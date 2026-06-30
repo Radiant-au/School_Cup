@@ -1,6 +1,6 @@
 ## Context
 
-Three small UX issues in the squad view and fixture date picker:
+Three small UX issues in the squad view and fixture date picker, plus a table display issue:
 
 1. **Player avatar circle**: `PlayerAvatar` in `MatchSquad.tsx` only applies team color (border + background tint) when `isScorer` is true. Non-scorers get a generic gray border. The user wants every player's circle to show team color.
 
@@ -8,17 +8,21 @@ Three small UX issues in the squad view and fixture date picker:
 
 3. **Goal badge**: The goal count badge on player avatars uses team color. The user wants it to be green (`#22c55e`) to clearly signal "goal scored."
 
+4. **Table +/- column**: The "+/-" column currently shows the signed goal difference (e.g., "+1", "-1"). The user wants it to show the actual goals for/against format (e.g., "2-1") to make the goal difference calculation transparent. The "GD" column will continue to show the signed difference.
+
 ## Goals / Non-Goals
 
 **Goals:**
 - Player avatar circle always uses team color for border and background tint.
 - TODAY computed using Myanmar timezone (UTC+6:30).
 - Goal badge uses green instead of team color.
+- Table "+/-" column shows "GF-GA" format (e.g., "2-1").
 
 **Non-Goals:**
 - Adding profile images to avatar circles (future work).
 - Supporting multiple timezones — Myanmar only.
 - Changing the GoalIndicator component (football ball icons stay as-is).
+- Changing the "GD" column behavior (it already shows signed goal difference correctly).
 
 ## Decisions
 
@@ -46,7 +50,14 @@ const TODAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Yangon", year: 
 
 **Rationale**: Green universally signals "goal/score." Team color on the badge was visually noisy when combined with the already-colored avatar circle.
 
+### 4. Table +/- column shows GF-GA format
+
+**Decision**: Change the "+/-" column in `TableTab.tsx` from `formatSignedGD(row.gd)` to `${row.gf}-${row.ga}`. This shows the actual goals scored and conceded (e.g., "2-1" for AME, "1-2" for EcE(A)). The "GD" column continues to show the signed goal difference (+1, -1).
+
+**Rationale**: Showing "2-1" makes it immediately clear how the goal difference was calculated. It's more informative than just "+1" and helps users understand the team's offensive/defensive performance at a glance.
+
 ## Risks / Trade-offs
 
 - **[Asia/Yangon support]** → Very old browsers may not support the `Asia/Yangon` timezone ID. Mitigation: All modern browsers support it. Fallback would be UTC, which is acceptable.
 - **[Goal badge contrast]** → Green badge on dark backgrounds is fine. On light backgrounds it might clash. Mitigation: The app is dark-mode only.
+- **[Table column width]** → "2-1" takes more space than "+1". Mitigation: The column is already wide enough for 3-character strings. No layout change needed.

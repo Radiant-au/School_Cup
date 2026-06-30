@@ -11,7 +11,12 @@ import {
 } from "@/data/tournament";
 import { TeamCrest } from "@/components/shared/TeamCrest";
 
-const TODAY = new Date().toISOString().slice(0, 10);
+const TODAY = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Yangon",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+}).format(new Date());
 
 export function FixtureTab() {
   const todayIdx = TOURNAMENT_DATES.indexOf(TODAY);
@@ -157,8 +162,8 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
   const badgeText =
     match.group === "Female"
       ? "FEMALE"
-      : match.group === "Semi-final" || match.group === "Final"
-        ? `${match.group.toUpperCase()} · MALE`
+      : match.group === "Semi-final" || match.group === "Final" || match.group === "Bronze Final"
+        ? `${match.group.toUpperCase()} · ${match.gender.toUpperCase()}`
         : `GROUP ${match.group} · ${match.gender.toUpperCase()}`;
 
   const isFinished =
