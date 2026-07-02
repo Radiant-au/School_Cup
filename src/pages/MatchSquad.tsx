@@ -12,12 +12,13 @@ import {
 } from "@/data/tournament";
 import { SQUADS } from "@/data/squads";
 import footballImg from "@/assets/football.svg";
+import { cloudinary } from "@/lib/cloudinary";
 import { TeamCrest } from "@/components/shared/TeamCrest";
 
 function FootballBall({ size = 14 }: { size?: number }) {
   return (
     <img
-      src="https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782764556/76adb940-d963-48d3-aa07-63865817bbba.png"
+      src={footballImg}
       alt="goal"
       style={{ width: size, height: size }}
       className="rounded-full object-contain bg-white shrink-0"
@@ -87,8 +88,12 @@ function PlayerCard({ name, number, profile_string_link, goals, delay }: PlayerC
         >
           {showPhoto ? (
             <img
-              src={profile_string_link}
+              src={cloudinary(profile_string_link)}
               alt=""
+              loading="lazy"
+              decoding="async"
+              width={184}
+              height={184}
               onError={() => setImgError(true)}
               className="w-full h-full rounded-full object-cover"
             />

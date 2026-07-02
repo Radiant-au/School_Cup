@@ -455,7 +455,7 @@ export const MATCH_EVENTS: MatchEvent[] = [
   { matchId: "2", teamId: "EcE(A)", playerId: "EcE_A_03" },
   { matchId: "4", teamId: "CE_M", playerId: "CE_B_03" },
   { matchId: "4", teamId: "CE_M", playerId: "CE_B_15" },
-  { matchId: "4", teamId: "CE_M", playerId: "CE_B_15" },
+  { matchId: "4", teamId: "CE_M", playerId: "CE_B_01" },
   { matchId: "4", teamId: "EcE(B)", playerId: "EcE_B_07" },
   { matchId: "4", teamId: "EcE(B)", playerId: "EcE_B_13" },
   { matchId: "5", teamId: "PrE(B)", playerId: "PrE_B_10" },
