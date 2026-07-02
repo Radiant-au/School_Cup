@@ -108,10 +108,13 @@ function LeagueTable({
                 <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-7">
                   L
                 </th>
-                <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-10">
-                  +/-
+                <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-7">
+                  +
                 </th>
                 <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-7">
+                  -
+                </th>
+                <th className="px-2 py-2 text-[10px] text-muted-foreground uppercase tracking-widest font-semibold text-center w-10">
                   GD
                 </th>
                 <th className="px-2 pr-3 py-2 text-[10px] text-foreground uppercase tracking-widest font-bold text-center w-8">
@@ -162,10 +165,13 @@ function LeagueTable({
                     <td className="px-2 py-2.5 text-center text-muted-foreground text-xs">
                       {row.l}
                     </td>
-                    <td className={`px-2 py-2.5 text-center text-xs font-medium ${gdColorClass(row.gd)}`}>
-                      {`${row.gf}-${row.ga}`}
+                    <td className="px-2 py-2.5 text-center text-muted-foreground text-xs">
+                      {row.gf}
                     </td>
                     <td className="px-2 py-2.5 text-center text-muted-foreground text-xs">
+                      {row.ga}
+                    </td>
+                    <td className={`px-2 py-2.5 text-center text-xs font-medium ${gdColorClass(row.gd)}`}>
                       {row.gd}
                     </td>
                     <td className="px-2 pr-3 py-2.5 text-center font-bold text-[13px] text-foreground">
