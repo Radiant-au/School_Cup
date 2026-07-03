@@ -8,3 +8,4 @@ dist/public
 .vite
 .DS_Store
 .vscode/
+.firebase/
