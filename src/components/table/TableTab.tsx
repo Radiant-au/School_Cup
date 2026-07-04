@@ -79,7 +79,9 @@ function LeagueTable({
   qualifyCount: number;
 }) {
   const [data] = useState(initialData);
-  const sortedData = [...data].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+  const sortedData = [...data].sort(
+    (a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf,
+  );
 
   return (
     <div className="flex flex-col gap-2">

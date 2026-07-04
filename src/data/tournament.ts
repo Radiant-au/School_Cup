@@ -11,6 +11,15 @@ export interface MatchEvent {
   playerId: string;
 }
 
+export interface Scorer {
+  teamId: string;
+  playerId: string;
+  name: string;
+  number: string;
+  profile_string_link: string;
+  goals: number;
+}
+
 export interface StandingEntry {
   teamId: string;
   p: number;
@@ -247,9 +256,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
     group: "A",
     gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 1,
+    scoreB: 0,
+    finished: true,
   },
   {
     id: "14",
@@ -261,9 +270,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
     group: "A",
     gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 0,
+    scoreB: 1,
+    finished: true,
   },
   {
     id: "15",
@@ -275,9 +284,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/EcE_g4mp5f.jpg",
     group: "Female",
     gender: "Female",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 0,
+    scoreB: 2,
+    finished: true,
   },
   // Day 6
   {
@@ -356,8 +365,9 @@ export const MATCHES: Match[] = [
     id: "21",
     date: "2026-07-07",
     time: "3:00 PM",
-    teamA: "Group A 1st",
+    teamA: "PrE(A)",
     teamB: "Group B 2nd",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
     group: "Semi-final",
     gender: "Male",
     scoreA: null,
@@ -369,7 +379,8 @@ export const MATCHES: Match[] = [
     date: "2026-07-07",
     time: "4:30 PM",
     teamA: "Group B 1st",
-    teamB: "Group A 2nd",
+    teamB: "AME",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
     group: "Semi-final",
     gender: "Male",
     scoreA: null,
@@ -471,13 +482,17 @@ export const MATCH_EVENTS: MatchEvent[] = [
   { matchId: "11", teamId: "CE_M", playerId: "CE_B_03" },
   { matchId: "11", teamId: "CE_M", playerId: "CE_B_13" },
   { matchId: "11", teamId: "IS(B)", playerId: "IS_B_10" },
+  { matchId: "13", teamId: "PrE(A)", playerId: "PrE_A_09" },
+  { matchId: "14", teamId: "AME", playerId: "AME_03" },
+  { matchId: "15", teamId: "EcE_F", playerId: "EcE_F_09" },
+  { matchId: "15", teamId: "EcE_F", playerId: "EcE_F_06" },
 ];
 
 export const STANDINGS: StandingEntry[] = [
-  { teamId: "PrE(A)", p: 2, w: 0, d: 2, l: 0, gf: 2, ga: 2, gd: 0, pts: 2 },
-  { teamId: "IS(A)", p: 2, w: 1, d: 1, l: 0, gf: 1, ga: 0, gd: 1, pts: 4 },
-  { teamId: "AME", p: 2, w: 0, d: 1, l: 1, gf: 3, ga: 4, gd: -1, pts: 1 },
-  { teamId: "EcE(A)", p: 2, w: 1, d: 0, l: 1, gf: 2, ga: 2, gd: 0, pts: 3 },
+  { teamId: "PrE(A)", p: 3, w: 1, d: 2, l: 0, gf: 3, ga: 2, gd: 1, pts: 5 },
+  { teamId: "IS(A)", p: 3, w: 1, d: 1, l: 1, gf: 1, ga: 1, gd: 0, pts: 4 },
+  { teamId: "AME", p: 3, w: 1, d: 1, l: 1, gf: 4, ga: 4, gd: 0, pts: 4 },
+  { teamId: "EcE(A)", p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 3, gd: -1, pts: 3 },
   { teamId: "IS_F", p: 2, w: 0, d: 2, l: 0, gf: 0, ga: 0, gd: 0, pts: 2 },
   { teamId: "CE_F", p: 2, w: 0, d: 2, l: 0, gf: 0, ga: 0, gd: 0, pts: 2 },
   { teamId: "CE_M", p: 2, w: 2, d: 0, l: 0, gf: 6, ga: 3, gd: 3, pts: 6 },
@@ -485,10 +500,34 @@ export const STANDINGS: StandingEntry[] = [
   { teamId: "IS(B)", p: 2, w: 0, d: 0, l: 2, gf: 1, ga: 5, gd: -4, pts: 0 },
   { teamId: "PrE(B)", p: 2, w: 1, d: 1, l: 0, gf: 3, ga: 1, gd: 2, pts: 4 },
   { teamId: "PrE_F", p: 2, w: 0, d: 2, l: 0, gf: 0, ga: 0, gd: 0, pts: 2 },
-  { teamId: "AME_F", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
-  { teamId: "EcE_F", p: 1, w: 0, d: 1, l: 0, gf: 0, ga: 0, gd: 0, pts: 1 },
+  { teamId: "AME_F", p: 2, w: 0, d: 1, l: 1, gf: 0, ga: 2, gd: -2, pts: 1 },
+  { teamId: "EcE_F", p: 2, w: 1, d: 1, l: 0, gf: 2, ga: 0, gd: 2, pts: 4 },
 ];
 
 export const TOURNAMENT_DATES = Array.from(
   new Set(MATCHES.map((m) => m.date)),
 ).sort();
+
+export const TOP_SCORERS_MALE: Scorer[] = [
+  { teamId: "CE_M", playerId: "CE_B_03", name: "မောင်ဝေဖြိုးအောင်", number: "15", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782931671/WaiPhyoAung_15_iqztoe.jpg", goals: 3 },
+  { teamId: "AME", playerId: "AME_03", name: "မောင်ဗညားခန့်အောင်", number: "10", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782933785/BanyarKhantAung_10_yxuaf7.jpg", goals: 3 },
+  { teamId: "EcE(A)", playerId: "EcE_A_03", name: "မောင်ဟိန်းထက်နိုင်", number: "66", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782848569/SeinSein_66_priuit.jpg", goals: 2 },
+  { teamId: "PrE(B)", playerId: "PrE_B_10", name: "မောင်သန်းထိုက်ဦး", number: "21", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782962136/ThanHtikeOo_21_qy5z7m.jpg", goals: 2 },
+  { teamId: "PrE(A)", playerId: "PrE_A_03", name: "မောင်လှိုင်မျိုး", number: "7", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782847244/HlaingMyo_7_b4dl6s.jpg", goals: 2 },
+  { teamId: "CE_M", playerId: "CE_B_15", name: "မောင်ဟိန်းမင်းထက်", number: "", profile_string_link: "", goals: 1 },
+  { teamId: "CE_M", playerId: "CE_B_01", name: "မောင်အောင်ကောင်းပြည့်", number: "11", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782931665/AungKaungPyae_11_movjhv.jpg  ", goals: 1 },
+  { teamId: "EcE(B)", playerId: "EcE_B_07", name: "မောင်ကျော်ကျော်ဝင်း", number: "17", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782925800/KyawKyawWIn_17_xfujhq.jpg", goals: 1 },
+  { teamId: "EcE(B)", playerId: "EcE_B_13", name: "မောင်ဟိန်းထက်ဇော်", number: "20", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782925798/HeinHtetZaw_20_ykuc3h.jpg", goals: 1 },
+  { teamId: "IS(A)", playerId: "IS_A_14", name: "အာရွန်ရိုလျန်ဆန်း", number: "96", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782934738/AaronRoLiSang_96_qj5g7t.jpg", goals: 1 },
+  { teamId: "AME", playerId: "AME_09", name: "မောင်မင်းခန့်ကျော်", number: "7", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782933787/MinKhantKyaw_7_svbu6e.jpg", goals: 1 },
+  { teamId: "EcE(B)", playerId: "EcE_B_10", name: "မောင်ဘုန်းမြင့်ဇော်", number: "19", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782925797/BhoneMyintZaw_19_r37aqb.jpg", goals: 1 },
+  { teamId: "PrE(B)", playerId: "PrE_B_13", name: "မောင်ထိန်လင်းဖြိုး", number: "49", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782962135/HteinLinPhyo_49_c2ravz.jpg", goals: 1 },
+  { teamId: "CE_M", playerId: "CE_B_13", name: "မောင်မျိုးကိုကို", number: "19", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782931670/MyoKoKo_19_onzntp.jpg", goals: 1 },
+  { teamId: "IS(B)", playerId: "IS_B_10", name: "ငြိမ်းချမ်းအောင်", number: "67", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782970514/NyeinChanAung_67_qodnua.jpg", goals: 1 },
+  { teamId: "PrE(A)", playerId: "PrE_A_09", name: "မောင်ရာဇာဖြိုး", number: "26", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782934434/YarZarPhyo_26_wnre26.jpg", goals: 1 },
+];
+
+export const TOP_SCORERS_FEMALE: Scorer[] = [
+  { teamId: "EcE_F", playerId: "EcE_F_09", name: "မလချစ်ဒေါင်နော", number: "17", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782934280/LaChitDauNaw_17_axlj7c.jpg", goals: 1 },
+  { teamId: "EcE_F", playerId: "EcE_F_06", name: "မမေသန္တာကို", number: "15", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782932583/MayThandarKo_15_o0dmdn.jpg", goals: 1 },
+];

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Calendar, BarChart2, Trophy } from "lucide-react";
+import { Calendar, BarChart2, Goal } from "lucide-react";
 import { motion } from "framer-motion";
 import footballLogo from "@/assets/football.svg";
 
@@ -17,7 +17,7 @@ export function MobileLayout({
   const tabs = [
     { id: "fixtures", label: "Fixtures", icon: Calendar },
     { id: "table", label: "Table", icon: BarChart2 },
-    { id: "knockout", label: "Cup", icon: Trophy },
+    { id: "scorers", label: "Scorers", icon: Goal },
   ];
   const logo = "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748742/UTYCC_tttyy9.jpg"
 
@@ -28,12 +28,21 @@ export function MobileLayout({
 
       {/* Header */}
       <header className="pt-6 pb-4 px-4 bg-background sticky top-0 z-40 border-b border-border">
-        <div className="flex items-center justify-center gap-2">
-          <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
-          <h1 className="font-barlow text-2xl font-bold text-foreground tracking-wide uppercase drop-shadow-[0_0_12px_rgba(0,144,255,0.4)]">
-            UTYCC Cup
-          </h1>
-          <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
+            <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+            <h1 className="font-barlow text-2xl font-bold text-foreground tracking-wide uppercase drop-shadow-[0_0_12px_rgba(0,144,255,0.4)]">
+              UTYCC Cup
+            </h1>
+            <img src={logo} alt="Logo" className="w-8 h-8 rounded-full" />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-[2px] w-6 bg-gradient-to-r from-transparent to-accent/60" />
+            <span className="font-barlow text-[11px] font-semibold uppercase tracking-[0.25em] text-accent/80 border border-border rounded-full px-3 py-0.5 bg-muted/40 shadow-[0_0_10px_rgba(0,144,255,0.15)]">
+              2025–2026 Academic Year
+            </span>
+            <span className="h-[2px] w-6 bg-gradient-to-l from-transparent to-accent/60" />
+          </div>
         </div>
       </header>
 
