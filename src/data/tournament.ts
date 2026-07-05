@@ -54,6 +54,7 @@ export interface Match {
   scoreA: number | null;
   scoreB: number | null;
   finished: boolean;
+  disbanded?: boolean;
 }
 
 export const TEAMS: Team[] = [
@@ -299,9 +300,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
     group: "B",
     gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 0,
+    scoreB: 1,
+    finished: true,
   },
   {
     id: "17",
@@ -313,9 +314,9 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782749016/IS_t4dbbs.jpg",
     group: "B",
     gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
+    scoreA: 0,
+    scoreB: 2,
+    finished: true,
   },
   {
     id: "18",
@@ -327,6 +328,7 @@ export const MATCHES: Match[] = [
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
     group: "Female",
     gender: "Female",
+    disbanded: true,
     scoreA: null,
     scoreB: null,
     finished: false,
@@ -335,7 +337,7 @@ export const MATCHES: Match[] = [
   {
     id: "19",
     date: "2026-07-06",
-    time: "5:00 PM",
+    time: "4:00 PM",
     teamA: "CE_F",
     teamB: "AME_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -349,7 +351,7 @@ export const MATCHES: Match[] = [
   {
     id: "20",
     date: "2026-07-06",
-    time: "6:00 PM",
+    time: "5:00 PM",
     teamA: "PrE_F",
     teamB: "EcE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
@@ -366,8 +368,9 @@ export const MATCHES: Match[] = [
     date: "2026-07-07",
     time: "3:00 PM",
     teamA: "PrE(A)",
-    teamB: "Group B 2nd",
+    teamB: "CE_M",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
+    logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
     group: "Semi-final",
     gender: "Male",
     scoreA: null,
@@ -378,8 +381,9 @@ export const MATCHES: Match[] = [
     id: "22",
     date: "2026-07-07",
     time: "4:30 PM",
-    teamA: "Group B 1st",
+    teamA: "PrE(B)",
     teamB: "AME",
+    logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/PrE_rz6frk.jpg",
     logoB: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
     group: "Semi-final",
     gender: "Male",
@@ -391,7 +395,7 @@ export const MATCHES: Match[] = [
   {
     id: "23",
     date: "2026-07-08",
-    time: "5:00 PM",
+    time: "4:00 PM",
     teamA: "AME_F",
     teamB: "IS_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/AME_xb4b3q.jpg",
@@ -405,7 +409,7 @@ export const MATCHES: Match[] = [
   {
     id: "24",
     date: "2026-07-08",
-    time: "6:00 PM",
+    time: "5:00 PM",
     teamA: "CE_F",
     teamB: "EcE_F",
     logoA: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782748741/CE_elxpkv.jpg",
@@ -417,18 +421,6 @@ export const MATCHES: Match[] = [
     finished: false,
   },
   // Day 10 — Finals
-  {
-    id: "26",
-    date: "2026-07-10",
-    time: "3:00 PM",
-    teamA: "TBD",
-    teamB: "TBD",
-    group: "Bronze Final",
-    gender: "Male",
-    scoreA: null,
-    scoreB: null,
-    finished: false,
-  },
   {
     id: "25",
     date: "2026-07-10",
@@ -442,7 +434,7 @@ export const MATCHES: Match[] = [
     finished: false,
   },
   {
-    id: "27",
+    id: "26",
     date: "2026-07-10",
     time: "6:00 PM",
     teamA: "TBD",
@@ -486,6 +478,8 @@ export const MATCH_EVENTS: MatchEvent[] = [
   { matchId: "14", teamId: "AME", playerId: "AME_03" },
   { matchId: "15", teamId: "EcE_F", playerId: "EcE_F_09" },
   { matchId: "15", teamId: "EcE_F", playerId: "EcE_F_06" },
+  { matchId: "17", teamId: "IS(B)", playerId: "IS_B_14" },
+  { matchId: "17", teamId: "IS(B)", playerId: "IS_B_10" },
 ];
 
 export const STANDINGS: StandingEntry[] = [
@@ -495,10 +489,10 @@ export const STANDINGS: StandingEntry[] = [
   { teamId: "EcE(A)", p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 3, gd: -1, pts: 3 },
   { teamId: "IS_F", p: 2, w: 0, d: 2, l: 0, gf: 0, ga: 0, gd: 0, pts: 2 },
   { teamId: "CE_F", p: 2, w: 0, d: 2, l: 0, gf: 0, ga: 0, gd: 0, pts: 2 },
-  { teamId: "CE_M", p: 2, w: 2, d: 0, l: 0, gf: 6, ga: 3, gd: 3, pts: 6 },
-  { teamId: "EcE(B)", p: 2, w: 0, d: 1, l: 1, gf: 3, ga: 4, gd: -1, pts: 1 },
-  { teamId: "IS(B)", p: 2, w: 0, d: 0, l: 2, gf: 1, ga: 5, gd: -4, pts: 0 },
-  { teamId: "PrE(B)", p: 2, w: 1, d: 1, l: 0, gf: 3, ga: 1, gd: 2, pts: 4 },
+  { teamId: "CE_M", p: 3, w: 2, d: 0, l: 1, gf: 6, ga: 4, gd: 2, pts: 6 },
+  { teamId: "EcE(B)", p: 3, w: 0, d: 1, l: 2, gf: 3, ga: 6, gd: -3, pts: 1 },
+  { teamId: "IS(B)", p: 3, w: 1, d: 0, l: 2, gf: 3, ga: 5, gd: -2, pts: 3 },
+  { teamId: "PrE(B)", p: 3, w: 2, d: 1, l: 0, gf: 4, ga: 1, gd: 3, pts: 7 },
   { teamId: "PrE_F", p: 2, w: 0, d: 2, l: 0, gf: 0, ga: 0, gd: 0, pts: 2 },
   { teamId: "AME_F", p: 2, w: 0, d: 1, l: 1, gf: 0, ga: 2, gd: -2, pts: 1 },
   { teamId: "EcE_F", p: 2, w: 1, d: 1, l: 0, gf: 2, ga: 0, gd: 2, pts: 4 },
@@ -523,7 +517,8 @@ export const TOP_SCORERS_MALE: Scorer[] = [
   { teamId: "EcE(B)", playerId: "EcE_B_10", name: "မောင်ဘုန်းမြင့်ဇော်", number: "19", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782925797/BhoneMyintZaw_19_r37aqb.jpg", goals: 1 },
   { teamId: "PrE(B)", playerId: "PrE_B_13", name: "မောင်ထိန်လင်းဖြိုး", number: "49", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782962135/HteinLinPhyo_49_c2ravz.jpg", goals: 1 },
   { teamId: "CE_M", playerId: "CE_B_13", name: "မောင်မျိုးကိုကို", number: "19", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782931670/MyoKoKo_19_onzntp.jpg", goals: 1 },
-  { teamId: "IS(B)", playerId: "IS_B_10", name: "ငြိမ်းချမ်းအောင်", number: "67", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782970514/NyeinChanAung_67_qodnua.jpg", goals: 1 },
+  { teamId: "IS(B)", playerId: "IS_B_10", name: "ငြိမ်းချမ်းအောင်", number: "67", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782970514/NyeinChanAung_67_qodnua.jpg", goals: 2 },
+  { teamId: "IS(B)", playerId: "IS_B_14", name: "ဘုန်းလျှံဆွေ", number: "10", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782970512/MgBhone_10_qj4so4.jpg", goals: 1 },
   { teamId: "PrE(A)", playerId: "PrE_A_09", name: "မောင်ရာဇာဖြိုး", number: "26", profile_string_link: "https://res.cloudinary.com/dw7kk0lvp/image/upload/v1782934434/YarZarPhyo_26_wnre26.jpg", goals: 1 },
 ];
 

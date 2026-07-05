@@ -96,12 +96,12 @@ function PreviewAvatar({ scorer }: { scorer: Scorer }) {
   if (showPhoto) {
     return (
       <img
-        src={cloudinary(scorer.profile_string_link)}
+        src={cloudinary(scorer.profile_string_link, { w: 480, h: 480 })}
         alt=""
         loading="lazy"
         decoding="async"
-        width={220}
-        height={220}
+        width={440}
+        height={440}
         onError={() => setImgError(true)}
         className="w-full h-full rounded-full object-cover"
       />

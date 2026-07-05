@@ -189,6 +189,23 @@ export default function MatchSquad() {
     );
   }
 
+  if (match.disbanded) {
+    return (
+      <div className="w-full min-h-[100dvh] bg-background flex flex-col items-center justify-center gap-4">
+        <p className="text-red-400 font-barlow text-lg font-bold tracking-widest uppercase">
+          Disbanded
+        </p>
+        <p className="text-muted-foreground text-sm">This match has been cancelled.</p>
+        <button
+          onClick={() => navigate("/")}
+          className="text-foreground text-sm underline"
+        >
+          Go back
+        </button>
+      </div>
+    );
+  }
+
   const teamAName = getTeamName(match.teamA);
   const teamBName = getTeamName(match.teamB);
   const teamAInfo = TEAMS.find((t) => t.id === match.teamA);

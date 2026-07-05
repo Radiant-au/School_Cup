@@ -5,6 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import MatchSquad from "@/pages/MatchSquad";
+import AdminFixtures from "@/pages/admin/AdminFixtures";
+import AdminLiveMatch from "@/pages/admin/AdminLiveMatch";
 
 const queryClient = new QueryClient();
 
@@ -13,6 +15,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/match/:id" component={MatchSquad} />
+      <Route path="/fifaOwner" component={AdminFixtures} />
+      <Route path="/fifaOwner/match/:id" component={AdminLiveMatch} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -168,6 +168,7 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
 
   const isFinished =
     match.finished && match.scoreA !== null && match.scoreB !== null;
+  const isDisbanded = !!match.disbanded;
   const teamAName = getTeamName(match.teamA);
   const teamBName = getTeamName(match.teamB);
 
@@ -176,7 +177,9 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
       data-testid={`match-card-${match.id}`}
       whileTap={{ scale: 0.975 }}
       onClick={onTap}
-      className="bg-card border border-card-border rounded-xl overflow-hidden shadow-md cursor-pointer"
+      className={`bg-card border border-card-border rounded-xl overflow-hidden shadow-md cursor-pointer transition-opacity ${
+        isDisbanded ? "opacity-60" : ""
+      }`}
     >
       <div className="px-4 pt-3 pb-3">
         {/* Top row */}
@@ -184,11 +187,15 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
           <span className="text-[10px] font-bold tracking-widest text-blue-400 px-2 py-0.5 rounded-sm bg-blue-500/10 border border-blue-500/20">
             {badgeText}
           </span>
-          {isFinished && (
+          {isDisbanded ? (
+            <span className="text-[10px] font-bold text-red-400 bg-red-500/10 border border-red-500/30 px-2 py-0.5 rounded-sm tracking-widest">
+              DISBAND
+            </span>
+          ) : isFinished ? (
             <span className="text-[10px] font-bold text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-sm tracking-wide">
               FT
             </span>
-          )}
+          ) : null}
         </div>
 
         {/* Teams row */}
@@ -201,7 +208,17 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
           </div>
 
           <div className="flex flex-col items-center shrink-0 gap-0.5">
-            {isFinished ? (
+            {isDisbanded ? (
+              <div className="flex flex-col items-center gap-1">
+                <span className="relative font-barlow text-sm font-extrabold tracking-widest text-red-400/90 leading-none">
+                  DISBAND
+                  <span className="absolute left-0 right-0 top-1/2 h-[2px] bg-red-400/60 -translate-y-1/2 rotate-[-8deg]" />
+                </span>
+                <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-red-400/50">
+                  Cancelled
+                </span>
+              </div>
+            ) : isFinished ? (
               <>
                 <div className="flex items-center gap-1.5">
                   <span className="font-barlow text-4xl font-extrabold leading-none">
