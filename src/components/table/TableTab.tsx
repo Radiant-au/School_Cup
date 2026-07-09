@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { TEAMS, STANDINGS } from "@/data/tournament";
+import { TEAMS } from "@/data/tournament";
 import { motion } from "framer-motion";
 import { TeamCrest } from "@/components/shared/TeamCrest";
+import { useStandings } from "@/hooks/useStandings";
 
 interface TableRow {
   team: string;
@@ -16,10 +16,16 @@ interface TableRow {
   pts: number;
 }
 
-const buildTable = (group: string, gender: string): TableRow[] => {
+import type { StandingEntry } from "@/data/tournament";
+
+const buildTable = (
+  group: string,
+  gender: string,
+  standings: StandingEntry[],
+): TableRow[] => {
   return TEAMS.filter((t) => t.group === group && t.gender === gender).map(
     (t) => {
-      const entry = STANDINGS.find((s) => s.teamId === t.id);
+      const entry = standings.find((s) => s.teamId === t.id);
       return {
         team: t.name,
         logo: t.logo,
@@ -43,6 +49,7 @@ function gdColorClass(gd: number): string {
 }
 
 export function TableTab() {
+  const { data: standings = [] } = useStandings();
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -52,17 +59,17 @@ export function TableTab() {
     >
       <LeagueTable
         title="GROUP A · MALE"
-        data={buildTable("A", "Male")}
+        data={buildTable("A", "Male", standings)}
         qualifyCount={2}
       />
       <LeagueTable
         title="GROUP B · MALE"
-        data={buildTable("B", "Male")}
+        data={buildTable("B", "Male", standings)}
         qualifyCount={2}
       />
       <LeagueTable
         title="FEMALE"
-        data={buildTable("Female", "Female")}
+        data={buildTable("Female", "Female", standings)}
         qualifyCount={2}
       />
     </motion.div>
@@ -71,14 +78,13 @@ export function TableTab() {
 
 function LeagueTable({
   title,
-  data: initialData,
+  data,
   qualifyCount,
 }: {
   title: string;
   data: TableRow[];
   qualifyCount: number;
 }) {
-  const [data] = useState(initialData);
   const sortedData = [...data].sort(
     (a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf,
   );

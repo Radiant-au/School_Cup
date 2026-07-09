@@ -3,12 +3,10 @@ import { format, parseISO } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { useLocation } from "wouter";
-import {
-  MATCHES,
-  TOURNAMENT_DATES,
-  getTeamName,
-  type Match,
-} from "@/data/tournament";
+import { getTeamName, type Match } from "@/data/tournament";
+import { useMatches } from "@/hooks/useMatches";
+import { useGoalEvents } from "@/hooks/useGoalEvents";
+import { deriveKnockoutOutcome } from "@/lib/knockout";
 import { TeamCrest } from "@/components/shared/TeamCrest";
 
 const TODAY = new Intl.DateTimeFormat("en-CA", {
@@ -19,15 +17,27 @@ const TODAY = new Intl.DateTimeFormat("en-CA", {
 }).format(new Date());
 
 export function FixtureTab() {
-  const todayIdx = TOURNAMENT_DATES.indexOf(TODAY);
-  const defaultIdx = todayIdx >= 0 ? todayIdx : 0;
-  const [selectedIdx, setSelectedIdx] = useState(defaultIdx);
+  const { data: matches = [], isLoading, isError, error } = useMatches();
+  const tournamentDates = Array.from(new Set(matches.map((m) => m.date))).sort();
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  const hasSetInitialIdx = useRef(false);
+
+  useEffect(() => {
+    if (hasSetInitialIdx.current) return;
+    if (tournamentDates.length === 0) return; // still loading, nothing to select yet
+
+    const todayIdx = tournamentDates.indexOf(TODAY);
+    setSelectedIdx(todayIdx >= 0 ? todayIdx : 0);
+    hasSetInitialIdx.current = true;
+  }, [tournamentDates.length]);
   const [, navigate] = useLocation();
 
-  const selectedDate = TOURNAMENT_DATES[selectedIdx];
-  const matchesForDate = MATCHES.filter((m) => m.date === selectedDate);
+  const selectedDate = tournamentDates[selectedIdx];
+  const matchesForDate = selectedDate
+    ? matches.filter((m) => m.date === selectedDate)
+    : [];
   const canPrev = selectedIdx > 0;
-  const canNext = selectedIdx < TOURNAMENT_DATES.length - 1;
+  const canNext = selectedIdx < tournamentDates.length - 1;
 
   const stripRef = useRef<HTMLDivElement>(null);
   const chipRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -45,6 +55,46 @@ export function FixtureTab() {
       behavior: "smooth",
     });
   }, [selectedIdx]);
+
+  if (isLoading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="px-4 py-16 text-center text-sm text-muted-foreground"
+      >
+        Loading matches...
+      </motion.div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="px-4 py-16 text-center text-sm text-red-400"
+      >
+        Could not load matches.
+        <br />
+        <span className="text-xs text-muted-foreground">
+          {error instanceof Error ? error.message : "Unknown error"}
+        </span>
+      </motion.div>
+    );
+  }
+
+  if (!selectedDate) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="px-4 py-16 text-center text-sm text-muted-foreground"
+      >
+        No matches scheduled.
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -71,7 +121,7 @@ export function FixtureTab() {
             className="flex-1 flex overflow-x-auto no-scrollbar py-2"
           >
             <div className="flex gap-1 px-1">
-              {TOURNAMENT_DATES.map((date, i) => {
+              {tournamentDates.map((date, i) => {
                 const parsed = parseISO(date);
                 const dayAbbr = format(parsed, "EEE").toUpperCase();
                 const dateNum = format(parsed, "d");
@@ -86,8 +136,8 @@ export function FixtureTab() {
                     }}
                     onClick={() => setSelectedIdx(i)}
                     className={`relative flex flex-col items-center justify-center min-w-[52px] h-[52px] rounded-xl transition-all duration-200 ${isActive
-                        ? "bg-foreground text-background"
-                        : "text-muted-foreground hover:text-foreground/80"
+                      ? "bg-foreground text-background"
+                      : "text-muted-foreground hover:text-foreground/80"
                       }`}
                   >
                     <span
@@ -169,17 +219,19 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
   const isFinished =
     match.finished && match.scoreA !== null && match.scoreB !== null;
   const isDisbanded = !!match.disbanded;
+  const isLive = match.status === "live";
   const teamAName = getTeamName(match.teamA);
   const teamBName = getTeamName(match.teamB);
+  const { aEliminated, bEliminated, hasPenalties, penAWins, penBWins } =
+    deriveKnockoutOutcome(match);
 
   return (
     <motion.div
       data-testid={`match-card-${match.id}`}
       whileTap={{ scale: 0.975 }}
       onClick={onTap}
-      className={`bg-card border border-card-border rounded-xl overflow-hidden shadow-md cursor-pointer transition-opacity ${
-        isDisbanded ? "opacity-60" : ""
-      }`}
+      className={`bg-card border border-card-border rounded-xl overflow-hidden shadow-md cursor-pointer transition-opacity ${isDisbanded ? "opacity-60" : ""
+        }`}
     >
       <div className="px-4 pt-3 pb-3">
         {/* Top row */}
@@ -191,6 +243,11 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
             <span className="text-[10px] font-bold text-red-400 bg-red-500/10 border border-red-500/30 px-2 py-0.5 rounded-sm tracking-widest">
               DISBAND
             </span>
+          ) : isLive ? (
+            <span className="flex items-center gap-1 text-[10px] font-bold text-red-400 bg-red-500/10 border border-red-500/25 px-2 py-0.5 rounded-sm tracking-wide">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+              LIVE
+            </span>
           ) : isFinished ? (
             <span className="text-[10px] font-bold text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-sm tracking-wide">
               FT
@@ -200,9 +257,9 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
 
         {/* Teams row */}
         <div className="flex items-center justify-between gap-3">
-          <div className="flex-1 flex flex-col items-center gap-1.5">
+          <div className={`flex-1 flex flex-col items-center gap-1.5 ${aEliminated ? "opacity-45" : ""}`}>
             <TeamCrest name={teamAName} logo={match.logoA} />
-            <span className="font-barlow text-[17px] font-bold tracking-wide text-center leading-tight w-full truncate">
+            <span className={`font-barlow text-[17px] font-bold tracking-wide text-center leading-tight w-full truncate ${aEliminated ? "line-through decoration-red-500/70" : ""}`}>
               {teamAName}
             </span>
           </div>
@@ -231,7 +288,29 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
                     {match.scoreB}
                   </span>
                 </div>
+                {hasPenalties && (
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <span className="text-[9px] font-bold tracking-widest text-amber-400/80 mr-0.5">
+                      PEN
+                    </span>
+                    <span
+                      className={`font-barlow text-sm font-bold leading-none ${penAWins ? "text-foreground" : "text-muted-foreground/80"}`}
+                    >
+                      ({match.penaltyA})
+                    </span>
+                    <span className="font-barlow text-xs text-muted-foreground/60">
+                      -
+                    </span>
+                    <span
+                      className={`font-barlow text-sm font-bold leading-none ${penBWins ? "text-foreground" : "text-muted-foreground/80"}`}
+                    >
+                      ({match.penaltyB})
+                    </span>
+                  </div>
+                )}
               </>
+            ) : isLive ? (
+              <LiveScore match={match} />
             ) : (
               <span className="font-barlow text-2xl font-bold text-foreground/80 tracking-tight leading-none">
                 {match.time}
@@ -239,9 +318,9 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
             )}
           </div>
 
-          <div className="flex-1 flex flex-col items-center gap-1.5">
+          <div className={`flex-1 flex flex-col items-center gap-1.5 ${bEliminated ? "opacity-45" : ""}`}>
             <TeamCrest name={teamBName} logo={match.logoB} />
-            <span className="font-barlow text-[17px] font-bold tracking-wide text-center leading-tight w-full truncate">
+            <span className={`font-barlow text-[17px] font-bold tracking-wide text-center leading-tight w-full truncate ${bEliminated ? "line-through decoration-red-500/70" : ""}`}>
               {teamBName}
             </span>
           </div>
@@ -256,5 +335,22 @@ function MatchCard({ match, onTap }: { match: Match; onTap: () => void }) {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+function LiveScore({ match }: { match: Match }) {
+  const { data: events = [] } = useGoalEvents(match.id);
+  const liveScoreA = events.filter((e) => e.teamId === match.teamA).length;
+  const liveScoreB = events.filter((e) => e.teamId === match.teamB).length;
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className="font-barlow text-4xl font-extrabold leading-none text-red-400">
+        {liveScoreA}
+      </span>
+      <span className="font-barlow text-xl text-muted-foreground">-</span>
+      <span className="font-barlow text-4xl font-extrabold leading-none text-red-400">
+        {liveScoreB}
+      </span>
+    </div>
   );
 }

@@ -1,12 +1,6 @@
-# match-goals
+## MODIFIED Requirements
 
-## Purpose
-
-Defines the match goal events data model (Supabase `goal_events` table), goal aggregation per player per match, goal-scorer sorting in the squad view, and removal of legacy mock data.
-
-## Requirements
-
-### Requirement: Match goal events record goal scorers
+### Requirement: Match goal events array
 
 Goal events SHALL be stored as rows in the Supabase `goal_events` table. Each row SHALL have: `match_id` (string, referencing a match ID), `team_id` (string, referencing a team ID), and `player_id` (string, referencing a player ID). Each row represents exactly one goal scored. The legacy `MATCH_EVENTS` array in `tournament.ts` SHALL no longer be the source of truth for goal events; it is retained only as a pre-migration seed for `supabase/seed.sql`.
 
@@ -38,31 +32,3 @@ The squad view SHALL compute each player's goal count for the current match by c
 
 - **WHEN** the squad view renders and a player has no `goal_events` rows for the current match
 - **THEN** the player row displays a goal count of 0.
-
-### Requirement: Goal scorers sorted to top of squad view
-
-The squad view SHALL sort players so that scorers (players with goals > 0 in the current match) appear first, ordered by goals descending. Non-scorers SHALL follow in their original squad order.
-
-#### Scenario: Scorers appear before non-scorers
-
-- **WHEN** the squad view renders and 3 players scored goals
-- **THEN** those 3 players appear at the top of the list, sorted by goals descending, followed by the remaining players in their original squad order.
-
-#### Scenario: No goals scored
-
-- **WHEN** the squad view renders and no players scored goals in the match
-- **THEN** all players appear in their original squad order.
-
-### Requirement: Remove mock squad and goals data
-
-The `MOCK_SQUAD` and `MOCK_GOALS` exports SHALL be removed from `tournament.ts`. The `MatchSquad.tsx` page SHALL use `SQUADS[teamId]` and `MATCH_EVENTS` instead.
-
-#### Scenario: No mock data in tournament.ts
-
-- **WHEN** `tournament.ts` is inspected
-- **THEN** it does not export `MOCK_SQUAD` or `MOCK_GOALS`.
-
-#### Scenario: Squad view uses real data
-
-- **WHEN** the squad view renders for a match
-- **THEN** it reads players from `SQUADS[teamId]` and goal counts from `MATCH_EVENTS`.

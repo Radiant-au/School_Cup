@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Calendar, BarChart2, Goal } from "lucide-react";
 import { motion } from "framer-motion";
-import footballLogo from "@/assets/football.svg";
 
 interface MobileLayoutProps {
   children: ReactNode;

@@ -4,15 +4,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import {
-  MATCHES,
-  MATCH_EVENTS,
   TEAMS,
   getTeamName,
   type Player,
 } from "@/data/tournament";
 import { SQUADS } from "@/data/squads";
+import { useMatches } from "@/hooks/useMatches";
+import { useGoalEvents } from "@/hooks/useGoalEvents";
 import footballImg from "@/assets/football.svg";
 import { cloudinary } from "@/lib/cloudinary";
+import { deriveKnockoutOutcome } from "@/lib/knockout";
 import { TeamCrest } from "@/components/shared/TeamCrest";
 
 function FootballBall({ size = 14 }: { size?: number }) {
@@ -148,16 +149,13 @@ interface PlayerWithGoals extends Player {
 
 function aggregateGoals(
   squad: Player[],
-  matchId: string,
+  events: { teamId: string; playerId: string }[],
   teamId: string,
 ): PlayerWithGoals[] {
-  const matchGoals = MATCH_EVENTS.filter(
-    (e) => e.matchId === matchId && e.teamId === teamId,
-  );
-
+  const teamGoals = events.filter((e) => e.teamId === teamId);
   return squad.map((player) => ({
     ...player,
-    goals: matchGoals.filter((e) => e.playerId === player.id).length,
+    goals: teamGoals.filter((e) => e.playerId === player.id).length,
   }));
 }
 
@@ -173,7 +171,19 @@ export default function MatchSquad() {
   const [, navigate] = useLocation();
   const [activeTeamTab, setActiveTeamTab] = useState<"A" | "B">("A");
 
-  const match = MATCHES.find((m) => m.id === id);
+  const matchesQuery = useMatches();
+  const eventsQuery = useGoalEvents(id);
+
+  const match = matchesQuery.data?.find((m) => m.id === id);
+  const events = eventsQuery.data ?? [];
+
+  if (matchesQuery.isLoading || !matchesQuery.data) {
+    return (
+      <div className="w-full min-h-[100dvh] bg-background flex flex-col items-center justify-center gap-4">
+        <p className="text-muted-foreground">Loading match...</p>
+      </div>
+    );
+  }
 
   if (!match) {
     return (
@@ -212,14 +222,20 @@ export default function MatchSquad() {
   const teamBInfo = TEAMS.find((t) => t.id === match.teamB);
   const isFinished =
     match.finished && match.scoreA !== null && match.scoreB !== null;
+  const isLive = match.status === "live";
+  const { aEliminated, bEliminated, hasPenalties, penAWins, penBWins } =
+    deriveKnockoutOutcome(match);
 
   const squadA = SQUADS[match.teamA] ?? [];
   const squadB = SQUADS[match.teamB] ?? [];
 
-  const squadAWithGoals = sortSquad(aggregateGoals(squadA, match.id, match.teamA));
-  const squadBWithGoals = sortSquad(aggregateGoals(squadB, match.id, match.teamB));
+  const squadAWithGoals = sortSquad(aggregateGoals(squadA, events, match.teamA));
+  const squadBWithGoals = sortSquad(aggregateGoals(squadB, events, match.teamB));
 
   const activeSquad = activeTeamTab === "A" ? squadAWithGoals : squadBWithGoals;
+
+  const liveScoreA = events.filter((e) => e.teamId === match.teamA).length;
+  const liveScoreB = events.filter((e) => e.teamId === match.teamB).length;
 
   const badgeText =
     match.group === "Female"
@@ -251,13 +267,19 @@ export default function MatchSquad() {
               FULL TIME
             </span>
           )}
+          {isLive && (
+            <span className="ml-auto flex items-center gap-1 text-[10px] font-bold text-red-400 bg-red-500/10 border border-red-500/25 px-2 py-0.5 rounded-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+              LIVE
+            </span>
+          )}
         </div>
 
         <div className="px-4 pb-5 pt-1">
           <div className="flex items-center justify-between gap-2">
-            <div className="flex-1 flex flex-col items-center gap-2">
+            <div className={`flex-1 flex flex-col items-center gap-2 ${aEliminated ? "opacity-45" : ""}`}>
               <TeamCrest name={teamAName} logo={match.logoA} size="lg" isActive={activeTeamTab === "A"} />
-              <p className="font-barlow text-xl font-extrabold tracking-wide leading-tight text-center">
+              <p className={`font-barlow text-xl font-extrabold tracking-wide leading-tight text-center ${aEliminated ? "line-through decoration-red-500/70" : ""}`}>
                 {teamAName}
               </p>
               {teamAInfo && (
@@ -271,15 +293,49 @@ export default function MatchSquad() {
 
             <div className="flex flex-col items-center shrink-0 gap-1">
               {isFinished ? (
+                <div className="flex flex-col items-center gap-1">
+                  <div className="flex items-center gap-1">
+                    <span className="font-barlow text-3xl font-extrabold">
+                      {match.scoreA}
+                    </span>
+                    <span className="font-barlow text-xl text-muted-foreground mx-0.5">
+                      -
+                    </span>
+                    <span className="font-barlow text-3xl font-extrabold">
+                      {match.scoreB}
+                    </span>
+                  </div>
+                  {hasPenalties && (
+                    <div className="flex items-center gap-1">
+                      <span className="text-[9px] font-bold tracking-widest text-amber-400/80 mr-0.5">
+                        PEN
+                      </span>
+                      <span
+                        className={`font-barlow text-sm font-bold leading-none ${penAWins ? "text-foreground" : "text-muted-foreground/80"}`}
+                      >
+                        ({match.penaltyA})
+                      </span>
+                      <span className="font-barlow text-xs text-muted-foreground/60">
+                        -
+                      </span>
+                      <span
+                        className={`font-barlow text-sm font-bold leading-none ${penBWins ? "text-foreground" : "text-muted-foreground/80"}`}
+                      >
+                        ({match.penaltyB})
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : isLive ? (
                 <div className="flex items-center gap-1">
-                  <span className="font-barlow text-3xl font-extrabold">
-                    {match.scoreA}
+                  <span className="font-barlow text-3xl font-extrabold text-red-400">
+                    {liveScoreA}
                   </span>
                   <span className="font-barlow text-xl text-muted-foreground mx-0.5">
                     -
                   </span>
-                  <span className="font-barlow text-3xl font-extrabold">
-                    {match.scoreB}
+                  <span className="font-barlow text-3xl font-extrabold text-red-400">
+                    {liveScoreB}
                   </span>
                 </div>
               ) : (
@@ -294,9 +350,9 @@ export default function MatchSquad() {
               </p>
             </div>
 
-            <div className="flex-1 flex flex-col items-center gap-2">
+            <div className={`flex-1 flex flex-col items-center gap-2 ${bEliminated ? "opacity-45" : ""}`}>
               <TeamCrest name={teamBName} logo={match.logoB} size="lg" isActive={activeTeamTab === "B"} />
-              <p className="font-barlow text-xl font-extrabold tracking-wide leading-tight text-center">
+              <p className={`font-barlow text-xl font-extrabold tracking-wide leading-tight text-center ${bEliminated ? "line-through decoration-red-500/70" : ""}`}>
                 {teamBName}
               </p>
               {teamBInfo && (

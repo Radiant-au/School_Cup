@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { TOP_SCORERS_MALE, TOP_SCORERS_FEMALE, TEAMS, getTeamName, type Scorer } from "@/data/tournament";
+import { TEAMS, getTeamName, type Scorer } from "@/data/tournament";
+import { useTopScorers } from "@/hooks/useTopScorers";
 import { TeamCrest } from "@/components/shared/TeamCrest";
 import { cloudinary } from "@/lib/cloudinary";
 import footballImg from "@/assets/football.svg";
@@ -175,7 +176,7 @@ function PlayerPreviewModal({ scorer, onClose }: { scorer: Scorer; onClose: () =
 export function TopScorersTab() {
   const [activeGender, setActiveGender] = useState<"male" | "female">("male");
   const [previewScorer, setPreviewScorer] = useState<Scorer | null>(null);
-  const scorers = activeGender === "male" ? TOP_SCORERS_MALE : TOP_SCORERS_FEMALE;
+  const { data: scorers = [] } = useTopScorers(activeGender);
   const sorted = [...scorers].sort((a, b) => b.goals - a.goals);
 
   return (

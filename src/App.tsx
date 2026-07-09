@@ -7,6 +7,9 @@ import Home from "@/pages/Home";
 import MatchSquad from "@/pages/MatchSquad";
 import AdminFixtures from "@/pages/admin/AdminFixtures";
 import AdminLiveMatch from "@/pages/admin/AdminLiveMatch";
+import AdminStandings from "@/pages/admin/AdminStandings";
+import AdminLogin from "@/pages/admin/AdminLogin";
+import { AdminAuthGuard } from "@/lib/admin-auth-guard";
 
 const queryClient = new QueryClient();
 
@@ -15,8 +18,22 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/match/:id" component={MatchSquad} />
-      <Route path="/fifaOwner" component={AdminFixtures} />
-      <Route path="/fifaOwner/match/:id" component={AdminLiveMatch} />
+      <Route path="/fifaOwner/login" component={AdminLogin} />
+      <Route path="/fifaOwner">
+        <AdminAuthGuard>
+          <AdminFixtures />
+        </AdminAuthGuard>
+      </Route>
+      <Route path="/fifaOwner/standings">
+        <AdminAuthGuard>
+          <AdminStandings />
+        </AdminAuthGuard>
+      </Route>
+      <Route path="/fifaOwner/match/:id">
+        <AdminAuthGuard>
+          <AdminLiveMatch />
+        </AdminAuthGuard>
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );
